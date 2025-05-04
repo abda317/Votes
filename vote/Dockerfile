@@ -1,9 +1,10 @@
-FROM node:14
+FROM python:3.9-alpine
 
 WORKDIR /app
+ADD . /app
 
-RUN git clone https://github.com/dockersamples/example-voting-app.git . && \
-    cd vote && npm install && npm run build
+RUN pip install -r requirements.txt
 
-WORKDIR /app/vote
-CMD ["npm", "start"]
+ENV FLASK_APP=app.py
+
+CMD ["flask", "run", "--host=0.0.0.0", "--port=80"]
