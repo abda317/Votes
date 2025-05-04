@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  vote:
+    image: abda317/vote-app:latest
+    ports:
+      - "8080:80"
+    depends_on:
+      - redis
+
+  result:
+    image: abda317/result-app:latest
+    ports:
+      - "5001:80"
+    depends_on:
+      - db
+
+  redis:
+    image: redis:alpine
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: votes
